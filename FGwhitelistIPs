@@ -1,12 +1,12 @@
 # Ver 1.0
 # 4/18/19
 # https://support.ringcentral.com/s/article/9233?language=en_US#APPENDIX%20B
+# https://fortinetweb.s3.amazonaws.com/docs.fortinet.com/v2/attachments/588dfacf-14f2-11e9-b86b-00505692583a/fortigate-cli-ref-60.pdf
 # Add Ring Cereal Subnets to FG
 config firewall address
     edit RingCentralA
         set type ipmask
         set subnet 80.81.128.0 255.255.240.0
-#       set associated-interface any
 end
 config firewall address
     edit RingCentralB

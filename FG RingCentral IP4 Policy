@@ -1,4 +1,7 @@
-# Setting
+# FG create RingCentral IPv4 Policy
+# Ver. 1
+# 4/18/2019
+#
 config firewall policy
 edit 2
 set srcintf "port31"

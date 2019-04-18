@@ -1,1 +1,41 @@
 # srcaddr <addr>
+config firewall address
+    edit RingCentralA
+        set type ipmask
+        set subnet 80.81.128.0 255.255.240.0
+#       set associated-interface any
+end
+config firewall address
+    edit RingCentralB
+        set type ipmask
+        set subnet 103.44.68.0 255.255.252.0
+end
+config firewall address
+    edit RingCentralC
+        set type ipmask
+        set subnet 104.245.56.0 255.255.248.0
+end
+config firewall address
+    edit RingCentralD
+        set type ipmask
+        set subnet 185.23.248.0 255.255.252.0
+end
+config firewall address
+    edit RingCentralE
+        set type ipmask
+        set subnet 192.209.24.0 255.255.248.0
+end
+config firewall address
+    edit RingCentralF
+        set type ipmask
+        set subnet 199.68.212.0 255.255.252.0
+end
+config firewall address
+    edit RingCentralG
+        set type ipmask
+        set subnet 199.255.120.0 255.255.252.0
+end
+config firewall address
+    edit RingCentralB
+        set type ipmask
+        set subnet 208.87.40.0 255.255.252.0

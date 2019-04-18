@@ -1,4 +1,7 @@
-# srcaddr <addr>
+# Ver 1.0
+# 4/18/19
+# https://support.ringcentral.com/s/article/9233?language=en_US#APPENDIX%20B
+# Add Ring Cereal Subnets to FG
 config firewall address
     edit RingCentralA
         set type ipmask
@@ -39,3 +42,4 @@ config firewall address
     edit RingCentralB
         set type ipmask
         set subnet 208.87.40.0 255.255.252.0
+end

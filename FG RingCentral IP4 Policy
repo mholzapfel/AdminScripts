@@ -1,20 +1,17 @@
-# FG create RingCentral IPv4 Policy
+# FG create RingCentral IPv4 Policyconfig
 # Ver. 1
 # 4/18/2019
 #
 config firewall policy
-edit 2
-set srcintf "port31"
-set dstintf "port32"
-set srcaddr "all"
-set action accept
-set identity-based enable
-set nat enable
-config identity-based-policy
 edit 1
-set schedule "always"
-set groups "ldap-group1"
-set dstaddr "all"
-set service "ALL"
-next
+set name RingCent3to4
+set srcintf "port3"
+set dstintf "port3"
+set srcaddr "RingCentralA" "RingCentralB" "RingCentralC"
+set action accept
+set schedule always
+set service all
+set fsso disable
+set nat enable
 end
+

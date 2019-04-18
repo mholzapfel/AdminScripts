@@ -1,0 +1,17 @@
+# Setting
+config firewall policy
+edit 2
+set srcintf "port31"
+set dstintf "port32"
+set srcaddr "all"
+set action accept
+set identity-based enable
+set nat enable
+config identity-based-policy
+edit 1
+set schedule "always"
+set groups "ldap-group1"
+set dstaddr "all"
+set service "ALL"
+next
+end

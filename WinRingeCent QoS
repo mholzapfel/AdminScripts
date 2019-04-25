@@ -1,0 +1,9 @@
+# Ver. 1.0
+# 22 April 2019
+# Path for QOS GPO Ring Central Phone app
+# Win 8.1 to launch ISE \powershell then type ISE
+# User Config GPO User Config GPO \ Policy-based QOS
+# DSCP 46 for RingCentral app
+# %USERPROFILE%\AppData\Local\RingCentral\SoftPhoneApp\Softphone.exe
+# Powershell to make empty GPO 
+New-GPO -Name RingCentralQoS

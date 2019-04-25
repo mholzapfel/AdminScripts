@@ -1,0 +1,261 @@
+'******************************************************************************************
+'
+' Domain Script History
+' 01/1/1001 - BaseLine
+' 
+'******************************************************************************************
+On error resume next
+
+Set objSysInfo = CreateObject("ADSystemInfo")
+Set objNetwork = WScript.CreateObject("Wscript.Network")
+strUserPath = "LDAP://" & objSysInfo.UserName
+Set objUser = GetObject(strUserPath)
+Set objParent = GetObject(objUser.Parent)
+Set objWshShell = Wscript.CreateObject("WScript.Shell")
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+
+strDesktopPath = objWshShell.SpecialFolders("Desktop")
+strOUPath = objUser.Parent
+arrContainers = Split(strOUPath, ",")
+arrOU = Split(arrContainers(0), "=")
+arrLOC = Split (arrContainers(1), "=")
+strOU = arrOU(1)
+strLOC = arrLOC(1)
+strComputer = "."
+
+Set objWMIService = GetObject("winmgmts:\\" & strComputer & "\root\cimv2")
+Set colItems = objWMIService.ExecQuery("Select * from Win32_NetworkAdapterConfiguration Where IPEnabled = True")
+
+For Each objItem in colItems
+  strIPAddress = objItem.IPAddress(0)
+  arrIPAddress = Split(strIPAddress, ".")
+
+  
+' *****************************************************************************************
+' ******************************* Map printer according to physical location **************
+' *****************************************************************************************
+
+  If arrIPAddress(0) = "10" Then
+
+    Select Case arrIPAddress(1)
+'
+' SiteA - 2, 3
+' SiteB - 81
+' SiteC - 22 & 25
+' SiteD- 42 & 45
+' SiteE- 62 & 65
+'
+      Case 2, 3
+
+
+      Case 22, 25
+
+
+
+      Case 42, 45
+
+
+      Case 62, 65
+
+
+    End Select
+  End If
+Next
+
+
+' *****************************************************************************************
+' ******************************* Drive and printer mappings according to location ********
+' *****************************************************************************************
+
+Select Case strLOC
+ 
+    Case "CAL"
+      objNetwork.RemoveNetworkDrive "N:",True,True
+      objNetwork.RemoveNetworkDrive "O:",True,True
+      objNetwork.MapNetworkDrive "N:", "\\ServerName\OfficeShare"
+      objNetwork.MapNetworkDrive "O:", "\\ServerName\AccDocs"
+
+      Select Case strOU
+
+        Case "IT-Systems"
+          AddDesktopShortcuts
+          objNetwork.RemoveNetworkDrive "I:",True,True
+          objNetwork.MapNetworkDrive "I:", "\\ServerName\IT"
+
+
+        Case "IT-Dev"
+          AddDesktopShortcuts
+          objNetwork.RemoveNetworkDrive "I:",True,True
+          objNetwork.MapNetworkDrive "I:", "\\ServerName\IT"
+
+          
+        Case "IT-Account"
+          AddDesktopShortcuts
+          objNetwork.RemoveNetworkDrive "P:",True,True
+          objNetwork.RemoveNetworkDrive "S:",True,True     
+          objNetwork.RemoveNetworkDrive "T:",True,True
+	  objNetwork.RemoveNetworkDrive "K:",True,True
+          objNetwork.MapNetworkDrive "P:", "\\ServerName\share1"
+          objNetwork.MapNetworkDrive "S:", "\\ServerName\share2"
+	  objNetwork.MapNetworkDrive "K:", "\\ServerName\share3"
+   
+        'Case "IT-Executive"
+          'objNetwork.RemoveNetworkDrive "X:",True,True
+          'objNetwork.MapNetworkDrive "X:", "\\ServerName\share5"
+
+        
+        Case "FrontDesk"
+          AddDesktopShortcuts
+
+          
+        Case "Marketing"
+           AddDesktopShortcuts
+
+
+        Case "Sales"
+           AddDesktopShortcuts
+
+
+        Case "Transit"
+           AddDesktopShortcuts
+
+ 
+        Case "Warehouse"
+           AddDesktopShortcuts
+
+'          objNetwork.MapNetworkDrive "W:", "\\ServerName\share6"
+     
+    End Select
+
+    Case "siteB"
+      AddDesktopShortcuts
+
+      Select Case strOU
+
+        Case "Frontdesk", "IT"
+
+                    
+      End Select
+
+    Case "siteC"
+      AddDesktopShortcuts
+
+      Select Case strOU
+  
+        Case "Frontdesk"
+
+
+        Case "Management"
+
+
+        Case "Marketing"
+
+
+        Case "Sales"
+
+
+        Case "Warehouse"
+
+     
+    End Select
+
+    Case "SiteD"
+      AddDesktopShortcuts
+
+      Select Case strOU
+  
+        Case "Frontdesk"
+
+
+        Case "Management"
+
+
+        Case "Marketing"
+
+
+        Case "Sales"
+
+
+        Case "Warehouse"
+
+     
+    End Select
+
+End Select
+
+' *****************************************************************************************
+' ******************************* Drive and printer mappings according to groups **********
+' *****************************************************************************************
+
+For Each strGroup in objUser.MemberOf
+    strGroupPath = "LDAP://" & strGroup
+    Set objGroup = GetObject(strGroupPath)
+    strGroupName = objGroup.CN
+
+ Select Case strGroupName
+
+    Case "IT-Accounting", "Windows-GrpA"
+      objNetwork.RemoveNetworkDrive "Q:",True,True
+      objNetwork.MapNetworkDrive "Q:", "\\ServerName\QB"
+      objNetwork.RemoveNetworkDrive "R:",True,True
+      objNetwork.MapNetworkDrive "R:", "\\ServerName\COMPB"
+      objNetwork.RemoveNetworkDrive "K:",True,True
+      objNetwork.MapNetworkDrive "K:", "\\ServerName\QB"
+
+    Case "Windows-GrpB"
+      objNetwork.RemoveNetworkDrive "K:",True,True
+      objNetwork.RemoveNetworkDrive "P:",True,True
+      objNetwork.RemoveNetworkDrive "S:",True,True 
+      objNetwork.RemoveNetworkDrive "T:",True,True
+
+    Case "Windows-GrpC"
+      Set objShortcutUrl = objWshShell.CreateShortcut(strDesktopPath & "\QB SingleU Mode.lnk")
+      objShortcutUrl.TargetPath = "\\ServerName\ShareA\cancel"
+      objShortcutUrl.Save
+
+    Case "Windows-GrpD"
+      objNetwork.RemoveNetworkDrive "M:",True,True 
+      objNetwork.MapNetworkDrive "M:", "\\ServerName\Marketing"
+
+ 
+    'Case "Windwos-GrpE"
+      'objNetwork.RemoveNetworkDrive "N:",True,True
+      'objNetwork.MapNetworkDrive "N:", "\\ServerName\OfficeShare\"
+     
+ End Select
+
+Next
+
+' *****************************************************************************************
+' *****************************************************************************************
+' *****************************************************************************************
+
+
+
+
+Sub AddDesktopShortcuts
+  objFSO.DeleteFile(strDesktopPath & "\WebShort1.url")
+  objFSO.DeleteFile(strDesktopPath & "\WebShort2.url")
+  objFSO.DeleteFile(strDesktopPath & "\WebShort3.url")
+  objFSO.DeleteFile(strDesktopPath & "\WebShort4.url")
+
+  '	objFSO.DeleteFile(strDesktopPath & "\WebShort1.url")
+  '	objFSO.DeleteFile(strDesktopPath & "\WebShort2.url")
+  '	objFSO.DeleteFile(strDesktopPath & "\WebShort3.url")
+  '	objFSO.DeleteFile(strDesktopPath & "\WebShort4.url")
+
+  '	objFSO.CopyFile "\\ServerName\install\*.*", strDesktopPath & "\", vbTrue
+
+'   Set objShortcutUrl = objWshShell.CreateShortcut(strDesktopPath & "\Help-Desk.url")
+'   objShortcutUrl.TargetPath = "http://Spiceworks/trackitweb/selfservice/login"
+'   objShortcutUrl.Save
+
+  ' Set objShortcutUrl = objWshShell.CreateShortcut(strDesktopPath & "\Outlook Email.url")
+  ' objShortcutUrl.TargetPath = "https://outlook.office.com/"
+  ' objShortcutUrl.Save
+
+  Set objShortcutUrl = objWshShell.CreateShortcut(strDesktopPath & "\HR Portal.url")
+  objShortcutUrl.TargetPath = "http://www.hr.com"
+  objShortcutUrl.Save
+
+End Sub

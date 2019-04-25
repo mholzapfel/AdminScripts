@@ -1,0 +1,12 @@
+config system interface
+edit port1
+set ip 192.168.0.100 255.255.255.0
+append allowaccess http
+end
+
+edit port1
+set vdom root
+set mode dhcp
+set allowaccess ping https ssh http fgfm
+set type physical
+set snmp-index 1

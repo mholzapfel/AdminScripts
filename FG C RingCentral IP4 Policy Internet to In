@@ -1,0 +1,18 @@
+# Ver. 1
+# 4/18/2019
+# Internet to Inside
+#Port3 Internet Port4 Inside
+#
+config firewall policy
+edit 2
+set name RingCent3to4
+set srcintf "port3"
+set dstintf "port4"
+set srcaddr "RingCentralA" "RingCentralB" "RingCentralC" "RingCentralD" "RingCentralE" "RingCenteralF" "RingCentralG"
+set action accept
+set schedule always
+set service all
+set fsso disable
+set nat enable
+end
+

@@ -1,5 +1,5 @@
 # Enable and Disable internet port to clear Fonality sessions
-# Ver. 1.1
+# Ver. 1.0
 # 25 April 2019
 # https://help.fortinet.com/fadc/4-5-0/cli/Content/FortiADC/cli-ref/config_system_interface.htm
 # config system interface

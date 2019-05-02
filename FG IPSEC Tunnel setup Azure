@@ -1,0 +1,13 @@
+config vpn ipsec phase1-interface
+    edit "IPSEC_Azure"
+        set interface "wan1"
+        set ike-version 2
+        set keylife 28800
+        set peertype any
+        set proposal aes256-sha1
+        set dpd disable
+        set dhgrp 2
+        set nattraversal disable
+        set remote-gw 1.1.1.1
+        set psksecret ENC BlaBlaBla
+    next

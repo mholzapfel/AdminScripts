@@ -110,7 +110,7 @@ edit "Azure"
         set fragmentation-mtu 1200
         set childless-ike disable
         set rekey enable
-        set remote-gw 137.117.18.214
+        set remote-gw 0.0.0.0
         set monitor ''
         set add-gw-route disable
         set psksecret ENC YouPWHere

@@ -1,0 +1,90 @@
+Firewall Policy
+edit 0
+        set name "IPSECcin_IPSECsac"
+        set srcintf "IPSEC_CIN"
+        set dstintf "IPSEC_SAC"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set fsso disable
+    next
+    edit 0
+        set name "IPSECsac_IPSECcin"
+        set srcintf "IPSEC_SAC"
+        set dstintf "IPSEC_CIN"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set fsso disable
+    next
+    edit 0
+        set name "IPSECbristol_IPSECsac"
+        set srcintf "IPSEC-PHL2-Com"
+        set dstintf "IPSEC_SAC"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set fsso disable
+    next
+    edit 0
+        set name "IPSECsac_IPSECBristol"
+        set srcintf "IPSEC_SAC"
+        set dstintf "IPSEC-PHL2-Com"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set fsso disable
+    next
+    edit 0
+        set name "IPSECeastpoint_IPSECsac"
+        set srcintf "IPSEC_ATL"
+        set dstintf "IPSEC_SAC"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set fsso disable
+    next
+    edit 0
+        set name "IPSECsac_IPSECeastpoint"
+        set srcintf "IPSEC_SAC"
+        set dstintf "IPSEC_ATL"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set fsso disable
+    next
+    edit 0
+        set name "IPSECwindsor_IPSECsac"
+        set srcintf "IPSEC_Deforest"
+        set dstintf "IPSEC_SAC"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set fsso disable
+    next
+    edit 0
+        set name "IPSECsac_IPSECwindsor"
+        set srcintf "IPSEC_SAC"
+        set dstintf "IPSEC_Deforest"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set fsso disable
+    next
+end
